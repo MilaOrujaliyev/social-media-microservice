@@ -12,6 +12,7 @@ public class TwitterService {
 
     public TwitterService() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
+
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey("ocGWRvGf0jVUj3ZJoPvaX8Pm7")
                 .setOAuthConsumerSecret("mW8g3y1HywgwX3lzZLsKsQkRvqvpFmpEIGYHqS9sWhWO7MAk2y")
