@@ -13,7 +13,7 @@ public class KafkaConsumerService {
 
     @KafkaListener(topics = "tweet_topic", groupId = "tweet_group_id")
     public void consume(Tweet tweet) {
-        logger.info("Consumed message: " + tweet);
+        logger.info("Consumed message: " + tweet.toString());
         // Burada Tweet nesnesi ile ilgili işlemler yapılabilir.
     }
 }
