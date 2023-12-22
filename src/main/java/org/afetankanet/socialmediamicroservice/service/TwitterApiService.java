@@ -6,6 +6,7 @@ import org.afetankanet.socialmediamicroservice.model.Tweet;
 import org.afetankanet.socialmediamicroservice.model.TweetResponse;
 import org.afetankanet.socialmediamicroservice.util.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,10 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class TwitterApiService {
+
+    @Value("${schedule.fixedRate}")
+    private long fixedRate;
+
     private final RestTemplate restTemplate;
     private final KafkaProducerService kafkaProducerService;
     private final String apiUrl = "https://twitter-api45.p.rapidapi.com/search.php?query=deprem";
@@ -23,7 +28,7 @@ public class TwitterApiService {
         this.kafkaProducerService = kafkaProducerService;
     }
 
-    @Scheduled(fixedRate = 10000000) // 10 saniyede bir çalışacak şekilde ayarlandı
+    @Scheduled(fixedRateString = "${schedule.fixedRate}")
     public void fetchAndSendTweets() throws JsonProcessingException {
         System.out.println("fetchAndSendTweets Scheduled service started");
         HttpHeaders headers = new HttpHeaders();
