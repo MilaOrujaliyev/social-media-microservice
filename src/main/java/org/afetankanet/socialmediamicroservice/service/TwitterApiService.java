@@ -21,6 +21,9 @@ public class TwitterApiService {
     @Value("${schedule.fixedRate}")
     private long fixedRate;
 
+    @Value("${queries}")
+    private List<String> queries;
+
     private final RestTemplate restTemplate;
     private final KafkaProducerService kafkaProducerService;
 
@@ -33,8 +36,6 @@ public class TwitterApiService {
 
     @Scheduled(fixedRateString = "${schedule.fixedRate}")
     public void scheduleFetchAndSendTweets() {
-        List<String> queries = Arrays.asList("afad", "AFAD");
-
         queries.parallelStream().forEach(query -> {
             try {
                 fetchAndSendTweets(query);
