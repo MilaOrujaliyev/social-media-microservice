@@ -2,9 +2,11 @@ package org.afetankanet.socialmediamicroservice.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "user_info")
-public class UserInfoEntity {
+public class UserInfoEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

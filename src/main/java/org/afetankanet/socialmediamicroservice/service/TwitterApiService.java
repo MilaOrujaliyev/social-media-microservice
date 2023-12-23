@@ -76,6 +76,7 @@ public class TwitterApiService {
 
             if (tweetResponse != null && tweetResponse.getTimeline() != null) {
                 for (Tweet tweet : tweetResponse.getTimeline()) {
+                    tweet.setQueryCriteria(query);
                     kafkaProducerService.sendTweet("tweet_topic", tweet);
                     System.out.println("produced: "+tweet);
                 }

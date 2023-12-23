@@ -1,13 +1,15 @@
 package org.afetankanet.socialmediamicroservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Table(name = "contents")
-public class ContentEntity {
+public class ContentEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,10 +29,12 @@ public class ContentEntity {
     private int retweets;
     private String views;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private String queryCriteria;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private UserInfoEntity userInfo;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private MediaEntity media;
 
     public Long getId() {
@@ -151,5 +155,13 @@ public class ContentEntity {
 
     public void setMedia(MediaEntity media) {
         this.media = media;
+    }
+
+    public String getQueryCriteria() {
+        return queryCriteria;
+    }
+
+    public void setQueryCriteria(String queryCriteria) {
+        this.queryCriteria = queryCriteria;
     }
 }

@@ -16,6 +16,8 @@ public class Tweet {
     private UserInfo user_info;
     private Media media;
 
+    private String queryCriteria;
+
     public String getType() {
         return type;
     }
@@ -126,5 +128,13 @@ public class Tweet {
 
     public void setMedia(Media media) {
         this.media = media;
+    }
+
+    public String getQueryCriteria() {
+        return queryCriteria;
+    }
+
+    public void setQueryCriteria(String queryCriteria) {
+        this.queryCriteria = queryCriteria;
     }
 }

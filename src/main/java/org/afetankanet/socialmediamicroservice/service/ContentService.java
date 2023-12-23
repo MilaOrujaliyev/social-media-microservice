@@ -11,6 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CacheEvict;
+
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +27,7 @@ public class ContentService {
         this.contentRepository = contentRepository;
     }
 
+    @CacheEvict(value = "contents", allEntries = true)
     public ContentEntity saveContent(ContentEntity contentEntity) {
         try {
             return contentRepository.save(contentEntity);
@@ -32,7 +37,7 @@ public class ContentService {
         }
 
     }
-
+    @Cacheable(value = "contents")
     public List<ContentEntity> findAllContents() {
         return contentRepository.findAll(Sort.by("tweetId").descending());
     }

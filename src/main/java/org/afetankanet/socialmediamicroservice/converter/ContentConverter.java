@@ -42,6 +42,7 @@ public class ContentConverter {
         contentEntity.setViews(tweet.getViews());
         contentEntity.setUserInfo(convertUserInfoToEntity(tweet.getUser_info()));
         contentEntity.setMedia(convertMediaToEntity(tweet.getMedia()));
+        contentEntity.setQueryCriteria(tweet.getQueryCriteria());
 
         return contentEntity;
     }
