@@ -1,7 +1,7 @@
 package org.afetankanet.socialmediamicroservice.service;
 
-import org.afetankanet.socialmediamicroservice.entity.TweetEntity;
-import org.afetankanet.socialmediamicroservice.repository.TweetRepository;
+import org.afetankanet.socialmediamicroservice.entity.ContentEntity;
+import org.afetankanet.socialmediamicroservice.repository.ContentRepository;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,17 +15,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TweetService {
-    private final TweetRepository tweetRepository;
+public class ContentService {
+    private final ContentRepository contentRepository;
 
     @Autowired
-    public TweetService(TweetRepository tweetRepository) {
-        this.tweetRepository = tweetRepository;
+    public ContentService(ContentRepository contentRepository) {
+        this.contentRepository = contentRepository;
     }
 
-    public TweetEntity saveTweet(TweetEntity tweetEntity) {
+    public ContentEntity saveContent(ContentEntity contentEntity) {
         try {
-            return tweetRepository.save(tweetEntity);
+            return contentRepository.save(contentEntity);
         } catch (ConstraintViolationException | DataIntegrityViolationException e) {
             System.out.println("ConstraintViolationException : The content is already exist ");
             return null;
@@ -33,20 +33,20 @@ public class TweetService {
 
     }
 
-    public List<TweetEntity> findAllTweets() {
-        return tweetRepository.findAll(Sort.by("tweetId").descending());
+    public List<ContentEntity> findAllContents() {
+        return contentRepository.findAll(Sort.by("tweetId").descending());
     }
 
-    public Page<TweetEntity> findAllTweetsWithPaging(int page, int size) {
+    public Page<ContentEntity> findAllContentsWithPaging(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("tweetId").descending());
-        return tweetRepository.findAll(pageable);
+        return contentRepository.findAll(pageable);
     }
 
-    public Optional<TweetEntity> findTweetById(Long id) {
-        return tweetRepository.findById(id);
+    public Optional<ContentEntity> findContentById(Long id) {
+        return contentRepository.findById(id);
     }
 
-    public void deleteTweet(Long id) {
-        tweetRepository.deleteById(id);
+    public void deleteContent(Long id) {
+        contentRepository.deleteById(id);
     }
 }

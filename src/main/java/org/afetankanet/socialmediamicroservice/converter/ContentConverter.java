@@ -4,31 +4,46 @@ import org.afetankanet.socialmediamicroservice.model.*;
 import org.afetankanet.socialmediamicroservice.entity.*;
 
 import java.util.stream.Collectors;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
-public class TweetConverter {
+import static org.afetankanet.socialmediamicroservice.converter.DateConverter.convertDateToLocalDateTime;
 
-    public static TweetEntity convertToEntity(Tweet tweet) {
+public class ContentConverter {
+
+    public static ContentEntity convertToEntity(Tweet tweet) {
         if (tweet == null) {
             return null;
         }
 
-        TweetEntity tweetEntity = new TweetEntity();
-        tweetEntity.setType(tweet.getType());
-        tweetEntity.setTweetId(tweet.getTweet_id());
-        tweetEntity.setScreenName(tweet.getScreen_name());
-        tweetEntity.setBookmarks(tweet.getBookmarks());
-        tweetEntity.setFavorites(tweet.getFavorites());
-        tweetEntity.setCreatedAt(tweet.getCreated_at());
-        tweetEntity.setText(tweet.getText());
-        tweetEntity.setLang(tweet.getLang());
-        tweetEntity.setQuotes(tweet.getQuotes());
-        tweetEntity.setReplies(tweet.getReplies());
-        tweetEntity.setRetweets(tweet.getRetweets());
-        tweetEntity.setViews(tweet.getViews());
-        tweetEntity.setUserInfo(convertUserInfoToEntity(tweet.getUser_info()));
-        tweetEntity.setMedia(convertMediaToEntity(tweet.getMedia()));
+        ContentEntity contentEntity = new ContentEntity();
+        contentEntity.setType(tweet.getType());
+        contentEntity.setTweetId(tweet.getTweet_id());
+        contentEntity.setScreenName(tweet.getScreen_name());
+        contentEntity.setBookmarks(tweet.getBookmarks());
+        contentEntity.setFavorites(tweet.getFavorites());
 
-        return tweetEntity;
+        contentEntity.setCreatedAt(convertDateToLocalDateTime(DateConverter.convertStringToDate(tweet.getCreated_at())));
+
+        contentEntity.setText(tweet.getText());
+        contentEntity.setLang(tweet.getLang());
+        contentEntity.setQuotes(tweet.getQuotes());
+        contentEntity.setReplies(tweet.getReplies());
+        contentEntity.setRetweets(tweet.getRetweets());
+        contentEntity.setViews(tweet.getViews());
+        contentEntity.setUserInfo(convertUserInfoToEntity(tweet.getUser_info()));
+        contentEntity.setMedia(convertMediaToEntity(tweet.getMedia()));
+
+        return contentEntity;
     }
 
     private static UserInfoEntity convertUserInfoToEntity(UserInfo userInfo) {
@@ -56,12 +71,12 @@ public class TweetConverter {
         MediaEntity mediaEntity = new MediaEntity();
         if (media.getPhoto() != null) {
             mediaEntity.setPhotos(media.getPhoto().stream()
-                    .map(TweetConverter::convertPhotoToEntity)
+                    .map(ContentConverter::convertPhotoToEntity)
                     .collect(Collectors.toList()));
         }
         if (media.getVideo() != null) {
             mediaEntity.setVideos(media.getVideo().stream()
-                    .map(TweetConverter::convertVideoToEntity)
+                    .map(ContentConverter::convertVideoToEntity)
                     .collect(Collectors.toList()));
         }
 
@@ -88,7 +103,7 @@ public class TweetConverter {
         videoEntity.setMediaUrlHttps(video.getMedia_url_https());
         if (video.getVariants() != null) {
             videoEntity.setVariants(video.getVariants().stream()
-                    .map(TweetConverter::convertVariantToEntity)
+                    .map(ContentConverter::convertVariantToEntity)
                     .collect(Collectors.toList()));
         }
 
@@ -107,4 +122,7 @@ public class TweetConverter {
 
         return variantEntity;
     }
+
+
+
 }

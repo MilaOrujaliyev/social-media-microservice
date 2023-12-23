@@ -20,7 +20,7 @@ public class TwitterApiService {
 
     private final RestTemplate restTemplate;
     private final KafkaProducerService kafkaProducerService;
-    private final String apiUrl = "https://twitter-api45.p.rapidapi.com/search.php?query=deprem";
+    private final String apiUrl = "https://twitter-api45.p.rapidapi.com/search.php?query=afad";
 
     @Autowired
     public TwitterApiService(KafkaProducerService kafkaProducerService) {

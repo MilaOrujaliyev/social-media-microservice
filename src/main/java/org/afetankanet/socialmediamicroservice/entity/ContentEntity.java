@@ -2,11 +2,12 @@ package org.afetankanet.socialmediamicroservice.entity;
 
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
-@Table(name = "tweets")
-public class TweetEntity {
+@Table(name = "contents")
+public class ContentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,7 +18,7 @@ public class TweetEntity {
     private String screenName;
     private int bookmarks;
     private int favorites;
-    private String createdAt;
+    private LocalDateTime createdAt;
     @Column(length = 10000)
     private String text;
     private String lang;
@@ -80,11 +81,11 @@ public class TweetEntity {
         this.favorites = favorites;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
