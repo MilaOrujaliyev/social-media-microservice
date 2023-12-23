@@ -12,6 +12,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 public class TwitterApiService {
 
@@ -20,7 +23,7 @@ public class TwitterApiService {
 
     private final RestTemplate restTemplate;
     private final KafkaProducerService kafkaProducerService;
-    private final String apiUrl = "https://twitter-api45.p.rapidapi.com/search.php?query=afad";
+
 
     @Autowired
     public TwitterApiService(KafkaProducerService kafkaProducerService) {
@@ -29,7 +32,21 @@ public class TwitterApiService {
     }
 
     @Scheduled(fixedRateString = "${schedule.fixedRate}")
-    public void fetchAndSendTweets() throws JsonProcessingException {
+    public void scheduleFetchAndSendTweets() {
+        List<String> queries = Arrays.asList("afad", "AFAD");
+
+        queries.parallelStream().forEach(query -> {
+            try {
+                fetchAndSendTweets(query);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+
+    public void fetchAndSendTweets(String query) throws JsonProcessingException {
+        String apiUrl = "https://twitter-api45.p.rapidapi.com/search.php?query="+query;
         System.out.println("fetchAndSendTweets Scheduled service started");
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-RapidAPI-Key", "a88e38919fmsh939460868d0ca86p128b47jsn3dbc5a8f1a50");
