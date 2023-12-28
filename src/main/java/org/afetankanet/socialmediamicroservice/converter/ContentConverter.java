@@ -32,7 +32,7 @@ public class ContentConverter {
         contentEntity.setBookmarks(tweet.getBookmarks());
         contentEntity.setFavorites(tweet.getFavorites());
 
-        contentEntity.setCreatedAt(convertDateToLocalDateTime(DateConverter.convertStringToDate(tweet.getCreated_at())));
+        contentEntity.setCreatedAt(DateConverter.convertStringToDate(tweet.getCreated_at()));
 
         contentEntity.setText(tweet.getText());
         contentEntity.setLang(tweet.getLang());

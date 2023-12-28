@@ -1,7 +1,7 @@
 package org.afetankanet.socialmediamicroservice.service;
 
 import org.afetankanet.socialmediamicroservice.entity.ContentEntity;
-import org.afetankanet.socialmediamicroservice.repository.ContentRepository;
+import org.afetankanet.socialmediamicroservice.repository.jpa.ContentRepository;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CacheEvict;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 

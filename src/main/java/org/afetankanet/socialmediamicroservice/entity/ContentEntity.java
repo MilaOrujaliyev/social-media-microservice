@@ -2,6 +2,10 @@ package org.afetankanet.socialmediamicroservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -9,9 +13,11 @@ import java.util.Date;
 
 @Entity
 @Table(name = "contents")
+@Document(indexName = "contententity") // Elasticsearch indeks adı küçük harf olmalıdır
 public class ContentEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Field(type = FieldType.Long)
     private Long id;
 
     private String type;
@@ -20,8 +26,9 @@ public class ContentEntity implements Serializable {
     private String screenName;
     private int bookmarks;
     private int favorites;
-    private LocalDateTime createdAt;
+    private Date createdAt;
     @Column(length = 10000)
+    @Field(type = FieldType.Text, analyzer = "standard")
     private String text;
     private String lang;
     private int quotes;
@@ -85,11 +92,11 @@ public class ContentEntity implements Serializable {
         this.favorites = favorites;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 

@@ -1,6 +1,7 @@
 package org.afetankanet.socialmediamicroservice.controller;
 
 import org.afetankanet.socialmediamicroservice.entity.ContentEntity;
+import org.afetankanet.socialmediamicroservice.service.ContentSearchService;
 import org.afetankanet.socialmediamicroservice.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,9 +16,17 @@ import java.util.Optional;
 public class ContentController {
     private final ContentService contentService;
 
+    private final ContentSearchService contentSearchService;
+
     @Autowired
-    public ContentController(ContentService contentService) {
+    public ContentController(ContentService contentService, ContentSearchService contentSearchService) {
         this.contentService = contentService;
+        this.contentSearchService = contentSearchService;
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ContentEntity>> search(@RequestParam String text) {
+        return ResponseEntity.ok(contentSearchService.searchByText(text));
     }
 
     @PostMapping

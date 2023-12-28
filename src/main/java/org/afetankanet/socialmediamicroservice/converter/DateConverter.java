@@ -3,9 +3,7 @@ package org.afetankanet.socialmediamicroservice.converter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -19,12 +17,25 @@ public class DateConverter {
 
         try {
             // Gelen tarihi Türkiye saati (GMT+3) olarak parse et
-            return twitterDateFormat.parse(dateString);
+            Date date= twitterDateFormat.parse(dateString);
+
+            // Calendar örneğini al ve mevcut tarihi ayarla
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+            // 3 saat ileriye taşı
+            calendar.add(Calendar.HOUR_OF_DAY, 3);
+
+            // Güncellenmiş tarihi al
+            return calendar.getTime();
+
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }
     }
+
+
 
     public static void main(String[] args) {
         String testDate = "Sat Dec 23 09:19:04 +0000 2023";

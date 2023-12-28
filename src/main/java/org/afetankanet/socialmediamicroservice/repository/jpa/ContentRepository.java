@@ -1,4 +1,4 @@
-package org.afetankanet.socialmediamicroservice.repository;
+package org.afetankanet.socialmediamicroservice.repository.jpa;
 
 import org.afetankanet.socialmediamicroservice.entity.ContentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
