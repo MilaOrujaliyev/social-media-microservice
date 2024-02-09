@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*") // Tüm originlere izin ver
+
 @RestController
 @RequestMapping("/api/contents")
 public class ContentController {

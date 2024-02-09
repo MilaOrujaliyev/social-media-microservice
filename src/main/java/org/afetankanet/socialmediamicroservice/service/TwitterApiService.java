@@ -48,7 +48,7 @@ public class TwitterApiService {
 
 
     public void fetchAndSendTweets(String query) throws JsonProcessingException {
-        String apiUrl = "https://twitter-api45.p.rapidapi.com/search.php?query="+query;
+        String apiUrl = "https://twitter-api45.p.rapidapi.com/search.php?query=" + query;
         System.out.println("fetchAndSendTweets Scheduled service started");
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-RapidAPI-Key", "a88e38919fmsh939460868d0ca86p128b47jsn3dbc5a8f1a50");
@@ -57,12 +57,7 @@ public class TwitterApiService {
 
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-        ResponseEntity<String> response= restTemplate.exchange(
-                apiUrl,
-                HttpMethod.GET,
-                entity,
-                String.class
-        );
+        ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, String.class);
 
         System.out.println(response.getBody());
 
@@ -79,7 +74,7 @@ public class TwitterApiService {
                 for (Tweet tweet : tweetResponse.getTimeline()) {
                     tweet.setQueryCriteria(query);
                     kafkaProducerService.sendTweet("tweet_topic", tweet);
-                    System.out.println("produced: "+tweet);
+                    System.out.println("produced: " + tweet);
                 }
             }
 
