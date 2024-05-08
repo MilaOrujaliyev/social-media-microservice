@@ -37,6 +37,7 @@ public class CommentService {
 
     public void deleteComment(Long id) {
         commentRepository.deleteById(id);
+        contentService.evictContent();
     }
 
     public CommentToSocialMediaContent getComment(Long id) {

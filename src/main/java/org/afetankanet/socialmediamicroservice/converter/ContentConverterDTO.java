@@ -22,6 +22,8 @@ public class ContentConverterDTO {
         dto.setRetweets(contentEntity.getRetweets());
         dto.setViews(contentEntity.getViews());
         dto.setQueryCriteria(contentEntity.getQueryCriteria());
+        dto.setLikes(contentEntity.getLikes());
+        dto.setDislikes(contentEntity.getDislikes());
 
         if (contentEntity.getUserInfo() != null) {
             dto.setUserInfo(convertUserInfoToDTO(contentEntity.getUserInfo()));

@@ -41,6 +41,12 @@ public class ContentEntity implements Serializable {
 
     private String queryCriteria;
 
+    @Column(name = "likes")
+    private Integer likes;
+
+    @Column(name = "dislikes")
+    private Integer dislikes;
+
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private UserInfoEntity userInfo;
 
@@ -186,5 +192,20 @@ public class ContentEntity implements Serializable {
 
     public void setComments(List<CommentToSocialMediaContent> comments) {
         this.comments = comments;
+    }
+    public int getLikes() {
+        return likes != null ? likes : 0;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
+
+    public int getDislikes() {
+        return dislikes != null ? dislikes : 0;
+    }
+
+    public void setDislikes(Integer dislikes) {
+        this.dislikes = dislikes;
     }
 }

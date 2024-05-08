@@ -1,5 +1,7 @@
 package org.afetankanet.socialmediamicroservice.model;
 
+import jakarta.persistence.Column;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +24,10 @@ public class ContentDTO implements Serializable {
     private UserInfoDTO userInfo;
     private MediaDTO media;
     private List<CommentDTO> comments;
+
+
+    private Integer likes;
+    private Integer dislikes;
 
     public Long getId() {
         return id;
@@ -157,5 +163,21 @@ public class ContentDTO implements Serializable {
 
     public void setComments(List<CommentDTO> comments) {
         this.comments = comments;
+    }
+
+    public int getLikes() {
+        return likes != null ? likes : 0;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
+
+    public int getDislikes() {
+        return dislikes != null ? dislikes : 0;
+    }
+
+    public void setDislikes(Integer dislikes) {
+        this.dislikes = dislikes;
     }
 }

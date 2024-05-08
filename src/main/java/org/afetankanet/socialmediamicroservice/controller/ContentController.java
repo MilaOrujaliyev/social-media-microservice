@@ -2,8 +2,10 @@ package org.afetankanet.socialmediamicroservice.controller;
 
 import org.afetankanet.socialmediamicroservice.entity.ContentEntity;
 import org.afetankanet.socialmediamicroservice.model.ContentDTO;
+import org.afetankanet.socialmediamicroservice.model.UserLikeDislikeRequestModel;
 import org.afetankanet.socialmediamicroservice.service.ContentSearchService;
 import org.afetankanet.socialmediamicroservice.service.ContentService;
+import org.afetankanet.socialmediamicroservice.service.LikeDislikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +23,13 @@ public class ContentController {
 
     private final ContentSearchService contentSearchService;
 
+    private final LikeDislikeService likeDislikeService;
+
     @Autowired
-    public ContentController(ContentService contentService, ContentSearchService contentSearchService) {
+    public ContentController(ContentService contentService, ContentSearchService contentSearchService, LikeDislikeService likeDislikeService) {
         this.contentService = contentService;
         this.contentSearchService = contentSearchService;
+        this.likeDislikeService = likeDislikeService;
     }
 
     @GetMapping("/search")
@@ -59,4 +64,26 @@ public class ContentController {
         contentService.deleteContent(id);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/like")
+    public ResponseEntity<?> addLike(@RequestBody UserLikeDislikeRequestModel request) {
+        try {
+            likeDislikeService.addLike(request);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
+    @PostMapping("/dislike")
+    public ResponseEntity<?> addDislike(@RequestBody UserLikeDislikeRequestModel request) {
+        try {
+            likeDislikeService.addDislike(request);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
+
 }

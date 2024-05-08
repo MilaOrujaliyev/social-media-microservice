@@ -6,7 +6,7 @@ import org.afetankanet.socialmediamicroservice.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/commentsToSocialMediaContent")
 public class CommentController {
@@ -21,11 +21,11 @@ public class CommentController {
         return ResponseEntity.ok(savedComment);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable Long id) {
         CommentToSocialMediaContent comment = commentService.getComment(id);
         if (comment == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         }
         commentService.deleteComment(id);
         return ResponseEntity.ok().build();

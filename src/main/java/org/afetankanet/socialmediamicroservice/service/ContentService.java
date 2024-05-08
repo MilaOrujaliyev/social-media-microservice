@@ -2,8 +2,13 @@ package org.afetankanet.socialmediamicroservice.service;
 
 import org.afetankanet.socialmediamicroservice.converter.ContentConverterDTO;
 import org.afetankanet.socialmediamicroservice.entity.ContentEntity;
+import org.afetankanet.socialmediamicroservice.entity.User;
+import org.afetankanet.socialmediamicroservice.entity.UserLikeDislike;
 import org.afetankanet.socialmediamicroservice.model.ContentDTO;
+import org.afetankanet.socialmediamicroservice.model.UserLikeDislikeRequestModel;
 import org.afetankanet.socialmediamicroservice.repository.jpa.ContentRepository;
+import org.afetankanet.socialmediamicroservice.repository.jpa.UserLikeDislikeRepository;
+import org.afetankanet.socialmediamicroservice.repository.jpa.UserRepository;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,10 +28,15 @@ import java.util.stream.Collectors;
 @Service
 public class ContentService {
     private final ContentRepository contentRepository;
+    private final UserLikeDislikeRepository userLikeDislikeRepository;
+
+    private final UserRepository userRepository;
 
     @Autowired
-    public ContentService(ContentRepository contentRepository) {
+    public ContentService(ContentRepository contentRepository, UserLikeDislikeRepository userLikeDislikeRepository, UserRepository userRepository) {
         this.contentRepository = contentRepository;
+        this.userLikeDislikeRepository = userLikeDislikeRepository;
+        this.userRepository = userRepository;
     }
 
     @CacheEvict(value = "contents", allEntries = true)
@@ -71,4 +81,7 @@ public class ContentService {
     public void deleteContent(Long id) {
         contentRepository.deleteById(id);
     }
+
+
+
 }
