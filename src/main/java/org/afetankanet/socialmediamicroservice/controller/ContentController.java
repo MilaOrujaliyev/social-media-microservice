@@ -1,6 +1,7 @@
 package org.afetankanet.socialmediamicroservice.controller;
 
 import org.afetankanet.socialmediamicroservice.entity.ContentEntity;
+import org.afetankanet.socialmediamicroservice.model.ContentDTO;
 import org.afetankanet.socialmediamicroservice.service.ContentSearchService;
 import org.afetankanet.socialmediamicroservice.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "*") // Tüm originlere izin ver
+@CrossOrigin(origins = "*")
 
 @RestController
 @RequestMapping("/api/contents")
@@ -37,7 +38,7 @@ public class ContentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ContentEntity>> getAllContents() {
+    public ResponseEntity<List<ContentDTO>> getAllContents() {
         return ResponseEntity.ok(contentService.findAllContents());
     }
 

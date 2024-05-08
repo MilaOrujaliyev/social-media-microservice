@@ -1,6 +1,8 @@
 package org.afetankanet.socialmediamicroservice.service;
 
+import org.afetankanet.socialmediamicroservice.converter.ContentConverterDTO;
 import org.afetankanet.socialmediamicroservice.entity.ContentEntity;
+import org.afetankanet.socialmediamicroservice.model.ContentDTO;
 import org.afetankanet.socialmediamicroservice.repository.jpa.ContentRepository;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.cache.annotation.CacheEvict;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ContentService {
@@ -36,9 +39,24 @@ public class ContentService {
         }
 
     }
+
+    @CacheEvict(value = "contents", allEntries = true)
+    public boolean evictContent() {
+
+        try {
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+
     @Cacheable(value = "contents")
-    public List<ContentEntity> findAllContents() {
-        return contentRepository.findAll(Sort.by("tweetId").descending());
+    public List<ContentDTO> findAllContents() {
+        List<ContentEntity> contentEntities = contentRepository.findAll(Sort.by("tweetId").descending());
+        return contentEntities.stream()
+                .map(ContentConverterDTO::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     public Page<ContentEntity> findAllContentsWithPaging(int page, int size) {

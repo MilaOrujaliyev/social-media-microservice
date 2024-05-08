@@ -1,56 +1,27 @@
-package org.afetankanet.socialmediamicroservice.entity;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-
+package org.afetankanet.socialmediamicroservice.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "contents")
-@Document(indexName = "contententity") // Elasticsearch indeks adı küçük harf olmalıdır
-public class ContentEntity implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Field(type = FieldType.Long)
+public class ContentDTO implements Serializable {
     private Long id;
-
     private String type;
-    @Column(unique = true)
     private String tweetId;
     private String screenName;
     private int bookmarks;
     private int favorites;
     private Date createdAt;
-    @Column(length = 10000)
-    @Field(type = FieldType.Text, analyzer = "standard")
     private String text;
     private String lang;
     private int quotes;
     private int replies;
     private int retweets;
     private String views;
-
     private String queryCriteria;
-
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private UserInfoEntity userInfo;
-
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private MediaEntity media;
-
-
-    @OneToMany(mappedBy = "content", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private List<CommentToSocialMediaContent> comments = new ArrayList<>();
+    private UserInfoDTO userInfo;
+    private MediaDTO media;
+    private List<CommentDTO> comments;
 
     public Long getId() {
         return id;
@@ -156,22 +127,6 @@ public class ContentEntity implements Serializable {
         this.views = views;
     }
 
-    public UserInfoEntity getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(UserInfoEntity userInfo) {
-        this.userInfo = userInfo;
-    }
-
-    public MediaEntity getMedia() {
-        return media;
-    }
-
-    public void setMedia(MediaEntity media) {
-        this.media = media;
-    }
-
     public String getQueryCriteria() {
         return queryCriteria;
     }
@@ -180,11 +135,27 @@ public class ContentEntity implements Serializable {
         this.queryCriteria = queryCriteria;
     }
 
-    public List<CommentToSocialMediaContent> getComments() {
+    public UserInfoDTO getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfoDTO userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public MediaDTO getMedia() {
+        return media;
+    }
+
+    public void setMedia(MediaDTO media) {
+        this.media = media;
+    }
+
+    public List<CommentDTO> getComments() {
         return comments;
     }
 
-    public void setComments(List<CommentToSocialMediaContent> comments) {
+    public void setComments(List<CommentDTO> comments) {
         this.comments = comments;
     }
 }

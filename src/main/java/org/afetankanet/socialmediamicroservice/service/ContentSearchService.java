@@ -22,6 +22,7 @@ public class ContentSearchService {
     }
 
     public List<ContentEntity> searchByText(String text) {
+
         return contentSearchRepository.findByTextContaining(text);
     }
 }
