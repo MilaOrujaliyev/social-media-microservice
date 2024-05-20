@@ -34,8 +34,8 @@ public class TwitterApiService {
     @Scheduled(fixedRateString = "${schedule.fixedRate}")
     public void scheduleFetchAndSendTweets() {
         List<String> queries = Arrays.asList(
-                "afad", "AFAD", "sel", "yangın", "deprem",
-                "heyelan", "hortum"
+                "AFAD", "sel", "yangın", "deprem",
+                "heyelan"
         );
         queries.parallelStream().forEach(query -> {
             try {
