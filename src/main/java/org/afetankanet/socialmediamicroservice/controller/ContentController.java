@@ -49,7 +49,7 @@ public class ContentController {
 
     @GetMapping("/paging")
     public ResponseEntity<Page<ContentEntity>> getAllContentsWithPaging(@RequestParam(defaultValue = "0") int page,
-                                                                      @RequestParam(defaultValue = "10") int size) {
+                                                                      @RequestParam(defaultValue = "30") int size) {
         return ResponseEntity.ok(contentService.findAllContentsWithPaging(page, size));
     }
 
